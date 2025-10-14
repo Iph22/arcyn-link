@@ -1,0 +1,26 @@
+{
+  "name": "arcyn-link",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Iph22/arcyn-link.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Iph22/arcyn-link/issues"
+  },
+  "homepage": "https://github.com/Iph22/arcyn-link#readme",
+  "dependencies": {
+    "tsx": "^4.20.6",
+    "turbo": "^2.5.8",
+    "typescript": "^5.9.3"
+  }
+}
