@@ -1,0 +1,126 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Team {
+  ARCYN_X
+  MODULEX
+  NEXALAB
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  username  String   @unique
+  password  String
+  team      Team
+  avatar    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  messages     Message[]
+  reactions    Reaction[]
+  channelUsers ChannelUser[]
+
+  @@map("users")
+}
+
+model Channel {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  team        Team
+  isPrivate   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  messages     Message[]
+  channelUsers ChannelUser[]
+  threads      Thread[]
+
+  @@map("channels")
+}
+
+model ChannelUser {
+  id        String   @id @default(cuid())
+  userId    String
+  channelId String
+  joinedAt  DateTime @default(now())
+
+  // Relations
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  channel Channel @relation(fields: [channelId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, channelId])
+  @@map("channel_users")
+}
+
+model Message {
+  id        String   @id @default(cuid())
+  content   String
+  userId    String
+  channelId String
+  threadId  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  channel   Channel    @relation(fields: [channelId], references: [id], onDelete: Cascade)
+  thread    Thread?    @relation(fields: [threadId], references: [id], onDelete: Cascade)
+  reactions Reaction[]
+
+  @@map("messages")
+}
+
+model Thread {
+  id        String   @id @default(cuid())
+  title     String?
+  channelId String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  channel   Channel     @relation(fields: [channelId], references: [id], onDelete: Cascade)
+  messages  Message[]
+  summaries AiSummary[]
+
+  @@map("threads")
+}
+
+model Reaction {
+  id        String   @id @default(cuid())
+  emoji     String
+  userId    String
+  messageId String
+  createdAt DateTime @default(now())
+
+  // Relations
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  message Message @relation(fields: [messageId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, messageId, emoji])
+  @@map("reactions")
+}
+
+model AiSummary {
+  id        String   @id @default(cuid())
+  content   String
+  threadId  String
+  createdAt DateTime @default(now())
+
+  // Relations
+  thread Thread @relation(fields: [threadId], references: [id], onDelete: Cascade)
+
+  @@map("ai_summaries")
+}

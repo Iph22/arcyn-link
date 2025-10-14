@@ -1,0 +1,24 @@
+{
+  "name": "arcyn-link-worker",
+  "version": "1.0.0",
+  "description": "AI worker service for Arcyn Link",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.24.3",
+    "@prisma/client": "^5.6.0",
+    "bullmq": "^4.15.0",
+    "dotenv": "^16.3.1",
+    "ioredis": "^5.3.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.9.0",
+    "prisma": "^5.6.0",
+    "tsx": "^4.6.0",
+    "typescript": "^5.2.2"
+  }
+}
