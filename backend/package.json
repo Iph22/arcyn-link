@@ -1,6 +1,7 @@
 {
   "name": "arcyn-link-backend",
   "version": "1.0.0",
+  "packageManager": "npm@11.6.1",
   "description": "Backend API for Arcyn Link",
   "main": "dist/index.js",
   "scripts": {

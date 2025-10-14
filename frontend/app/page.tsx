@@ -218,7 +218,7 @@ export default function HomePage() {
             </span>
           </div>
           <p className="text-gray-400">
-            © 2024 Arcyn. All rights reserved.
+            © 2025 Arcyn. All rights reserved.
           </p>
         </div>
       </footer>

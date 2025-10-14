@@ -1,6 +1,7 @@
 {
   "name": "arcyn-link-frontend",
   "version": "1.0.0",
+  "packageManager": "npm@11.6.1",
   "description": "Frontend for Arcyn Link",
   "private": true,
   "scripts": {

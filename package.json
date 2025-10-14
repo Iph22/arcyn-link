@@ -1,6 +1,7 @@
 {
   "name": "arcyn-link",
   "version": "1.0.0",
+  "packageManager": "npm@11.6.1",
   "description": "Cross-platform communication app with AI-powered insights",
   "private": true,
   "workspaces": [
