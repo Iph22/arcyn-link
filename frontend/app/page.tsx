@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { useAuth } from '@/lib/auth-context'
+import { useAuth } from '@/lib/supabase-auth-context'
 import { Button } from '@/components/ui/button'
 import { motion } from 'framer-motion'
 import { MessageSquare, Zap, Users, Brain } from 'lucide-react'
@@ -13,7 +13,7 @@ export default function HomePage() {
 
   useEffect(() => {
     if (!isLoading && user) {
-      router.push('/dashboard')
+      router.push('/demo')
     }
   }, [user, isLoading, router])
 
