@@ -7,6 +7,7 @@ import { Sidebar } from '@/components/dashboard/sidebar'
 import { ChatArea } from '@/components/dashboard/chat-area'
 import { AISummaryPanel } from '@/components/dashboard/ai-summary-panel'
 import { useToast } from '@/hooks/use-toast'
+import type { Channel } from '@/types/channel'
 
 export default function DashboardPage() {
   const { user, profile } = useAuth()
@@ -16,7 +17,8 @@ export default function DashboardPage() {
     activeChannel, 
     setActiveChannel, 
     sendMessage, 
-    createChannel, 
+    createChannel,
+    refreshChannels,
     isConnected 
   } = useRealtime()
   const { toast } = useToast()
@@ -35,15 +37,14 @@ export default function DashboardPage() {
         channels={channels}
         selectedChannelId={activeChannel}
         onChannelSelect={setActiveChannel}
-        onCreateChannel={createChannel}
+        onRefreshChannels={refreshChannels}
         isConnected={isConnected}
-        userTeam={profile?.team}
       />
 
       {/* Main Chat Area */}
       <div className="flex-1 flex">
         <ChatArea
-          channel={currentChannel}
+          channel={currentChannel ?? null}
           messages={messages}
           selectedThreadId={selectedThreadId}
           onThreadSelect={setSelectedThreadId}

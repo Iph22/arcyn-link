@@ -4,6 +4,7 @@ import { createContext, useContext, useEffect, useState, useCallback } from 'rea
 import { createClient } from '@/lib/supabase/client'
 import { useAuth } from './supabase-auth-context'
 import type { RealtimeChannel } from '@supabase/supabase-js'
+import type { Channel } from '@/types/channel'
 
 interface Message {
   id: string
@@ -18,13 +19,6 @@ interface Message {
   }
 }
 
-interface Channel {
-  id: string
-  name: string
-  team: string
-  created_at: string
-}
-
 interface RealtimeContextType {
   messages: Message[]
   channels: Channel[]
@@ -32,6 +26,7 @@ interface RealtimeContextType {
   setActiveChannel: (channelId: string) => void
   sendMessage: (content: string, channelId: string) => Promise<void>
   createChannel: (name: string, team: string) => Promise<void>
+  refreshChannels: () => Promise<void>
   isConnected: boolean
 }
 
@@ -47,23 +42,44 @@ export function RealtimeProvider({ children }: { children: React.ReactNode }) {
   const { user, profile } = useAuth()
   const supabase = createClient()
 
-  // Fetch channels
+  // Fetch channels with message counts
   const fetchChannels = useCallback(async () => {
     if (!profile) return
 
     try {
-      const { data, error } = await supabase
+      // First, get channels
+      const { data: channelsData, error: channelsError } = await supabase
         .from('channels')
         .select('*')
         .eq('team', profile.team)
         .order('created_at', { ascending: true })
 
-      if (error) throw error
-      setChannels(data || [])
+      if (channelsError) throw channelsError
+
+      // Then get message counts for each channel
+      const channelsWithCounts = await Promise.all(
+        (channelsData || []).map(async (channel) => {
+          const { count: messageCount } = await supabase
+            .from('messages')
+            .select('*', { count: 'exact', head: true })
+            .eq('channel_id', channel.id)
+
+          return {
+            ...channel,
+            isPrivate: channel.is_private ?? false,
+            _count: {
+              messages: messageCount || 0,
+              channelUsers: 0 // You can add a similar query for channel users if needed
+            }
+          }
+        })
+      )
+
+      setChannels(channelsWithCounts)
       
       // Set first channel as active if none selected
-      if (data && data.length > 0 && !activeChannel) {
-        setActiveChannel(data[0].id)
+      if (channelsWithCounts && channelsWithCounts.length > 0 && !activeChannel) {
+        setActiveChannel(channelsWithCounts[0].id)
       }
     } catch (error) {
       console.error('Error fetching channels:', error)
@@ -117,6 +133,8 @@ export function RealtimeProvider({ children }: { children: React.ReactNode }) {
           console.log('New message received:', payload)
           // Fetch the complete message with user profile
           fetchMessages(activeChannel)
+          // Also refresh channels to update message count
+          fetchChannels()
         }
       )
       .on(
@@ -147,7 +165,7 @@ export function RealtimeProvider({ children }: { children: React.ReactNode }) {
         supabase.removeChannel(channel)
       }
     }
-  }, [user, activeChannel, fetchMessages])
+  }, [user, activeChannel, fetchMessages, fetchChannels])
 
   // Fetch channels when user/profile changes
   useEffect(() => {
@@ -184,6 +202,7 @@ export function RealtimeProvider({ children }: { children: React.ReactNode }) {
         .insert({
           name,
           team,
+          is_private: false,
         })
         .select()
         .single()
@@ -212,6 +231,7 @@ export function RealtimeProvider({ children }: { children: React.ReactNode }) {
         setActiveChannel,
         sendMessage,
         createChannel,
+        refreshChannels: fetchChannels,
         isConnected,
       }}
     >

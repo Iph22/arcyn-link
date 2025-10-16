@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { getTeamColor, getTeamName, generateAvatar } from '@/lib/utils'
+import type { Channel } from '@/types/channel'
 import { 
   Hash, 
   Plus, 
@@ -17,17 +18,6 @@ import {
   MessageSquare
 } from 'lucide-react'
 import { motion } from 'framer-motion'
-
-interface Channel {
-  id: string
-  name: string
-  description?: string
-  isPrivate: boolean
-  _count: {
-    messages: number
-    channelUsers: number
-  }
-}
 
 interface SidebarProps {
   channels: Channel[]

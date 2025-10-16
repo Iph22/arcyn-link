@@ -46,8 +46,8 @@ export async function POST(request: NextRequest) {
     const conversation = context
       ?.reverse()
       .map(m => {
-        const username = m.user_profiles?.username || 'Unknown User'
-        const team = m.user_profiles?.team || 'GENERAL'
+        const username = m.user_profiles?.[0]?.username || 'Unknown User'
+        const team = m.user_profiles?.[0]?.team || 'GENERAL'
         return `[${team}] ${username}: ${m.content}`
       })
       .join('\n') || ''

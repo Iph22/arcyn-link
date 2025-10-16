@@ -53,8 +53,8 @@ export async function POST(request: NextRequest) {
     // Build conversation text for summarization
     const conversationText = messages
       .map(m => {
-        const username = m.user_profiles?.username || 'Unknown User'
-        const team = m.user_profiles?.team || 'GENERAL'
+        const username = m.user_profiles?.[0]?.username || 'Unknown User'
+        const team = m.user_profiles?.[0]?.team || 'GENERAL'
         const timestamp = new Date(m.created_at).toLocaleString()
         return `[${timestamp}] [${team}] ${username}: ${m.content}`
       })
