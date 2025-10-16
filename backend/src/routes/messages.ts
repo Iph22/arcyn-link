@@ -2,8 +2,7 @@ import express from 'express';
 import { z } from 'zod';
 import { prisma } from '../index';
 import { AuthenticatedRequest } from '../middleware/auth';
-import type { PrismaClient } from '@prisma/client';
-type Team = PrismaClient['team']['data'];
+import { Team } from '@prisma/client';
 
 const router = express.Router();
 
@@ -210,7 +209,7 @@ router.post('/:messageId/reactions', async (req: AuthenticatedRequest, res) => {
       }
     });
 
-    if (!message || message.channel.team !== (user.team as Team)) {
+    if (!message || message.channel.team !== user.team) {
       return res.status(404).json({ error: 'Message not found' });
     }
 
@@ -270,18 +269,23 @@ router.post('/:messageId/thread', async (req: AuthenticatedRequest, res) => {
     const message = await prisma.message.findFirst({
       where: { id: messageId },
       include: {
-        channel: true
+        channel: true,
+        user: {
+          select: {
+            username: true
+          }
+        }
       }
     });
 
-    if (!message || message.channel.team !== (user.team as Team)) {
+    if (!message || message.channel.team !== user.team) {
       return res.status(404).json({ error: 'Message not found' });
     }
 
     // Create thread
     const thread = await prisma.thread.create({
       data: {
-        title: title || `Thread from ${message.user}`,
+        title: title || `Thread from ${message.user.username}`,
         channelId: message.channelId
       }
     });
