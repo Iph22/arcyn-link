@@ -51,8 +51,8 @@ const aiSummaryWorker = new Worker(
   {
     connection: redis,
     concurrency: 3, // Process up to 3 jobs concurrently
-    removeOnComplete: 10,
-    removeOnFail: 5,
+    removeOnComplete: { count: 10 },
+    removeOnFail: { count: 5 },
   }
 );
 

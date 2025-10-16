@@ -2,7 +2,8 @@ import express from 'express';
 import { z } from 'zod';
 import { prisma } from '../index';
 import { AuthenticatedRequest } from '../middleware/auth';
-import { Team } from '@prisma/client';
+import type { PrismaClient } from '@prisma/client';
+type Team = PrismaClient['team']['data'];
 
 const router = express.Router();
 
