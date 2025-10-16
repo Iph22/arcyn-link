@@ -10,20 +10,10 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum TeamCategory {
+enum Team {
   ARCYN_X
   MODULEX
   NEXALAB
-}
-
-model Team {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  name      String
-  // ... other fields
-  channels  Channel[]
-  members   User[]
 }
 
 model User {
