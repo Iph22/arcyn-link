@@ -4,7 +4,7 @@ FROM node:18-alpine
 RUN apk add --no-cache openssl
 
 WORKDIR /app
-RUN apk add --no-cache openssl1.1-compat
+RUN apk add --no-cache openssl
 
 # Copy package files
 COPY package*.json ./
@@ -15,7 +15,7 @@ RUN npm install
 
 # Copy source code
 COPY src ./src
-COPY prisma ./prisma
+COPY prisma ./prismaw
 
 # copy prisma schema before generating client
 COPY prisma ./prisma
