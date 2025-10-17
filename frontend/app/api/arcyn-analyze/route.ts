@@ -1,7 +1,10 @@
+export const runtime = 'nodejs'
+export const dynamic = 'force-dynamic'
+
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import Anthropic from '@anthropic-ai/sdk'
-import pdf from 'pdf-parse'
+// REMOVED: import pdf from 'pdf-parse'
 
 const anthropic = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY!,
@@ -35,13 +38,14 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Convert file to buffer
-    const buffer = Buffer.from(await file.arrayBuffer())
+
     let extractedText = ''
+    const buffer = Buffer.from(await file.arrayBuffer())
 
     try {
       if (file.type === 'application/pdf') {
         // Parse PDF
+        const pdf = (await import('pdf-parse')).default
         const pdfData = await pdf(buffer)
         extractedText = pdfData.text
       } else if (file.type === 'text/plain') {

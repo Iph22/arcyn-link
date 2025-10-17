@@ -1,5 +1,23 @@
 'use client'
 
+declare global {
+  interface Window {
+    webkitSpeechRecognition: any;
+    SpeechRecognition: any;
+  }
+}
+
+interface SpeechRecognition {
+  continuous: boolean;
+  interimResults: boolean;
+  lang: string;
+  start: () => void;
+  stop: () => void;
+  onresult: (event: any) => void;
+  onerror: (event: any) => void;
+  onend: () => void;
+}
+
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Mic, MicOff, Send, Minimize2, Maximize2, X, Brain, Settings } from 'lucide-react'
@@ -51,23 +69,27 @@ export function ArcynEye({ isFloating = false, onClose, className }: ArcynEyePro
       // Speech Recognition
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
       if (SpeechRecognition) {
-        recognitionRef.current = new SpeechRecognition()
-        recognitionRef.current.continuous = false
-        recognitionRef.current.interimResults = false
-        recognitionRef.current.lang = 'en-US'
+        const recognition = new SpeechRecognition()
+        recognition.continuous = false
+        recognition.interimResults = false
+        recognition.lang = 'en-US'
+        recognitionRef.current = recognition
 
-        recognitionRef.current.onresult = (event) => {
+        if (recognitionRef.current) {
+          recognitionRef.current.onresult = (event) => {
           const transcript = event.results[0][0].transcript
           handleUserMessage(transcript)
-          setIsListening(false)
         }
 
-        recognitionRef.current.onerror = () => {
-          setIsListening(false)
-        }
+        if (recognitionRef.current) {
+          recognitionRef.current.onerror = () => {
+            setIsListening(false)
+          }
 
-        recognitionRef.current.onend = () => {
-          setIsListening(false)
+          recognitionRef.current.onend = () => {
+            setIsListening(false)
+          }
+        }
         }
       }
 
@@ -249,7 +271,7 @@ export function ArcynEye({ isFloating = false, onClose, className }: ArcynEyePro
       )}
       initial={isFloating ? { scale: 0, opacity: 0 } : false}
       animate={isFloating ? { scale: 1, opacity: 1 } : false}
-      exit={isFloating ? { scale: 0, opacity: 0 } : false}
+      exit={isFloating ? { scale: 0, opacity: 0 } : undefined}
     >
       {/* Header */}
       <div className="flex items-center justify-between p-4 border-b border-gray-700">
