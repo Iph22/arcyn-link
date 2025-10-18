@@ -9,7 +9,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { useToast } from '@/hooks/use-toast'
 import { motion } from 'framer-motion'
-import { Eye, EyeOff, ArrowLeft, Check } from 'lucide-react'
+import { Eye, EyeOff, ArrowLeft, Check, Mail } from 'lucide-react'
 
 const teams = [
   {
@@ -42,6 +42,7 @@ export default function RegisterPage() {
   const [selectedTeam, setSelectedTeam] = useState('')
   const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [showConfirmation, setShowConfirmation] = useState(false)
   const { register } = useAuth()
   const { toast } = useToast()
   const router = useRouter()
@@ -62,21 +63,69 @@ export default function RegisterPage() {
 
     try {
       await register(email, username, password, selectedTeam)
+      
+      // If we get here without error, registration was successful
       toast({
         title: "Welcome to Arcyn Link!",
         description: "Your account has been created successfully.",
       })
     } catch (error: any) {
-      toast({
-        title: "Registration failed",
-        description: error.message,
-        variant: "destructive",
-      })
+      if (error.message === 'CONFIRMATION_REQUIRED') {
+        // Show email confirmation screen
+        setShowConfirmation(true)
+      } else {
+        toast({
+          title: "Registration failed",
+          description: error.message,
+          variant: "destructive",
+        })
+      }
     } finally {
       setIsLoading(false)
     }
   }
 
+  // Email confirmation screen
+  if (showConfirmation) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex items-center justify-center p-4">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+          className="w-full max-w-md glass-effect p-8 rounded-2xl text-center"
+        >
+          <div className="w-16 h-16 bg-gradient-to-r from-cyan-500 to-violet-500 rounded-full flex items-center justify-center mx-auto mb-6">
+            <Mail className="w-8 h-8 text-white" />
+          </div>
+          
+          <h1 className="text-2xl font-display font-bold gradient-text mb-4">
+            Check Your Email
+          </h1>
+          
+          <p className="text-gray-400 mb-8">
+            We've sent a confirmation link to <span className="text-white font-semibold">{email}</span>. 
+            Please check your inbox and click the link to verify your account.
+          </p>
+
+          <div className="space-y-4">
+            <p className="text-sm text-gray-500">
+              Didn't receive the email? Check your spam folder.
+            </p>
+            
+            <Link href="/login">
+              <Button variant="ghost" className="text-cyan-400 hover:text-cyan-300">
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Back to login
+              </Button>
+            </Link>
+          </div>
+        </motion.div>
+      </div>
+    )
+  }
+
+  // Registration form
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex items-center justify-center p-4">
       <div className="w-full max-w-md">

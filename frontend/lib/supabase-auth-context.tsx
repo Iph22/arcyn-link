@@ -96,6 +96,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const register = async (email: string, username: string, password: string, team: string) => {
     try {
+      // Sign up with Supabase Auth - pass username and team as metadata
+      // The database trigger will automatically create the profile
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
@@ -103,28 +105,32 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           data: {
             username,
             team,
-          }
+          },
+          emailRedirectTo: `${window.location.origin}/auth/callback`
         }
       })
       
       if (error) throw error
       
-      // Create user profile
-      if (data.user) {
-        const { error: profileError } = await supabase
-          .from('user_profiles')
-          .insert({
-            id: data.user.id,
-            email,
-            username,
-            team,
-          })
-        
-        if (profileError) throw profileError
+      if (!data.user) {
+        throw new Error('No user returned from signup')
       }
-      
-      router.push('/demo')
+
+      // Check if email confirmation is required
+      if (!data.session) {
+        // Email confirmation required - user will receive an email
+        // Don't redirect, let the register page show a success message
+        throw new Error('CONFIRMATION_REQUIRED')
+      } else {
+        // Email confirmation disabled - user is logged in immediately
+        // The trigger has created the profile automatically
+        router.push('/demo')
+      }
     } catch (error: any) {
+      // Re-throw the confirmation required "error" so the UI can handle it
+      if (error.message === 'CONFIRMATION_REQUIRED') {
+        throw error
+      }
       throw new Error(error.message || 'Registration failed')
     }
   }
