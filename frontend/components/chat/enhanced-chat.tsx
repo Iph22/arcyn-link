@@ -184,27 +184,27 @@ export function EnhancedChat() {
   const getTeamColor = (team: string) => {
     switch (team) {
       case 'ARCYN_X':
-        return 'text-cyan-400'
+        return 'text-arcyn-gold'
       case 'MODULEX':
-        return 'text-violet-400'
+        return 'text-arcyn-soft-gold'
       case 'NEXALAB':
-        return 'text-emerald-400'
+        return 'text-arcyn-gold'
       default:
-        return 'text-gray-400'
+        return 'text-arcyn-subtext'
     }
   }
 
   const getMessageStyle = (message: Message) => {
     if (message.user_id === 'arcyn_eye') {
       return {
-        container: 'bg-gradient-to-r from-cyan-900/20 to-blue-900/20 border border-cyan-400/30 rounded-lg p-3',
-        avatar: 'bg-gradient-to-r from-cyan-400 to-blue-500 shadow-[0_0_15px_rgba(6,182,212,0.5)]',
-        username: 'text-cyan-400 font-semibold'
+        container: 'bg-gradient-to-r from-arcyn-graphite to-arcyn-matte-grey border border-arcyn-gold/30 rounded-lg p-3 shadow-gold-glow',
+        avatar: 'bg-gradient-to-r from-arcyn-gold to-arcyn-soft-gold shadow-[0_0_15px_rgba(255,215,0,0.5)]',
+        username: 'text-arcyn-gold font-semibold'
       }
     }
     return {
       container: '',
-      avatar: 'bg-gradient-to-r from-cyan-500 to-violet-500',
+      avatar: 'bg-gradient-to-r from-arcyn-gold to-arcyn-soft-gold',
       username: getTeamColor(message.user_profiles?.team || '')
     }
   }
@@ -219,34 +219,34 @@ export function EnhancedChat() {
   const getMessageTypeIcon = (messageType?: string) => {
     switch (messageType) {
       case 'ai_summary':
-        return <BarChart3 className="w-4 h-4 text-cyan-400" />
+        return <BarChart3 className="w-4 h-4 text-arcyn-gold" />
       case 'ai_analysis':
-        return <FileText className="w-4 h-4 text-cyan-400" />
+        return <FileText className="w-4 h-4 text-arcyn-gold" />
       case 'ai_response':
-        return <Sparkles className="w-4 h-4 text-cyan-400" />
+        return <Sparkles className="w-4 h-4 text-arcyn-gold" />
       default:
         return null
     }
   }
 
   return (
-    <div className="flex flex-col h-full bg-gray-900">
+    <div className="flex flex-col h-full bg-arcyn-black">
       {/* Header */}
-      <div className="p-4 border-b border-gray-700">
+      <div className="p-4 border-b border-arcyn-matte-grey">
         <div className="flex items-center justify-between">
-          <h2 className="text-xl font-semibold text-white">
+          <h2 className="text-xl font-semibold text-arcyn-text">
             {activeChannel ? `Channel Chat` : 'No Channel Selected'}
           </h2>
           <div className="flex items-center space-x-4">
             {isAEProcessing && (
-              <div className="flex items-center space-x-2 text-cyan-400">
+              <div className="flex items-center space-x-2 text-arcyn-gold">
                 <Loader2 className="w-4 h-4 animate-spin" />
                 <span className="text-sm">A.E Processing...</span>
               </div>
             )}
             <div className="flex items-center space-x-2">
               <div className={`w-2 h-2 rounded-full ${isConnected ? 'bg-green-500' : 'bg-red-500'}`} />
-              <span className="text-sm text-gray-400">
+              <span className="text-sm text-arcyn-subtext">
                 {isConnected ? 'Connected' : 'Disconnected'}
               </span>
             </div>
@@ -272,11 +272,11 @@ export function EnhancedChat() {
                       {message.user_id === 'arcyn_eye' ? 'Arcyn Eye' : (message.user_profiles?.username || 'Unknown User')}
                     </span>
                     {getMessageTypeIcon(message.message_type)}
-                    <span className="text-xs text-gray-500">
+                    <span className="text-xs text-arcyn-subtext">
                       {formatDistanceToNow(new Date(message.created_at), { addSuffix: true })}
                     </span>
                   </div>
-                  <div className="text-gray-300 mt-1 break-words whitespace-pre-wrap">
+                  <div className="text-arcyn-text mt-1 break-words whitespace-pre-wrap">
                     {message.content}
                   </div>
                 </div>
@@ -284,10 +284,10 @@ export function EnhancedChat() {
             )
           })}
           {messages.length === 0 && (
-            <div className="text-center text-gray-500 py-8">
-              <Bot className="w-12 h-12 mx-auto mb-4 text-cyan-400/50" />
+            <div className="text-center text-arcyn-subtext py-8">
+              <Bot className="w-12 h-12 mx-auto mb-4 text-arcyn-gold/50" />
               <p>No messages yet. Start the conversation!</p>
-              <p className="text-sm mt-2">Try mentioning <span className="text-cyan-400">@A.E</span> or use <span className="text-cyan-400">/ae</span> commands</p>
+              <p className="text-sm mt-2">Try mentioning <span className="text-arcyn-gold">@A.E</span> or use <span className="text-arcyn-gold">/ae</span> commands</p>
             </div>
           )}
         </div>
@@ -295,27 +295,27 @@ export function EnhancedChat() {
 
       {/* File Upload Area */}
       {activeChannel && (
-        <div className="p-4 border-t border-gray-700">
+        <div className="p-4 border-t border-arcyn-matte-grey">
           {/* File Drop Zone */}
           {!uploadedFile && (
             <div
               {...getRootProps()}
               className={`mb-4 p-6 border-2 border-dashed rounded-lg cursor-pointer transition-colors ${
                 isDragActive 
-                  ? 'border-cyan-400 bg-cyan-400/10' 
-                  : 'border-gray-600 hover:border-gray-500'
+                  ? 'border-arcyn-gold bg-arcyn-gold/10' 
+                  : 'border-arcyn-matte-grey hover:border-arcyn-soft-gold'
               }`}
             >
               <input {...getInputProps()} />
               <div className="text-center">
-                <Upload className="w-8 h-8 mx-auto mb-2 text-gray-400" />
-                <p className="text-sm text-gray-400">
+                <Upload className="w-8 h-8 mx-auto mb-2 text-arcyn-subtext" />
+                <p className="text-sm text-arcyn-subtext">
                   {isDragActive 
                     ? 'Drop file here for A.E analysis...' 
                     : 'Drag & drop a file for A.E analysis, or click to select'
                   }
                 </p>
-                <p className="text-xs text-gray-500 mt-1">
+                <p className="text-xs text-arcyn-subtext mt-1">
                   Supports PDF, TXT files
                 </p>
               </div>
@@ -324,12 +324,12 @@ export function EnhancedChat() {
 
           {/* Uploaded File Preview */}
           {uploadedFile && (
-            <div className="mb-4 p-3 bg-gray-800 rounded-lg border border-gray-600">
+            <div className="mb-4 p-3 bg-arcyn-graphite rounded-lg border border-arcyn-matte-grey">
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-2">
-                  <FileText className="w-5 h-5 text-cyan-400" />
-                  <span className="text-sm text-white">{uploadedFile.name}</span>
-                  <span className="text-xs text-gray-400">
+                  <FileText className="w-5 h-5 text-arcyn-gold" />
+                  <span className="text-sm text-arcyn-text">{uploadedFile.name}</span>
+                  <span className="text-xs text-arcyn-subtext">
                     ({(uploadedFile.size / 1024).toFixed(1)} KB)
                   </span>
                 </div>
@@ -338,7 +338,7 @@ export function EnhancedChat() {
                     onClick={handleFileAnalysis}
                     disabled={isAEProcessing}
                     size="sm"
-                    className="bg-cyan-600 hover:bg-cyan-700 text-white"
+                    className="bg-arcyn-gold hover:bg-arcyn-soft-gold text-arcyn-black"
                   >
                     {isAEProcessing ? (
                       <Loader2 className="w-4 h-4 animate-spin" />
@@ -353,7 +353,7 @@ export function EnhancedChat() {
                     onClick={removeUploadedFile}
                     size="sm"
                     variant="outline"
-                    className="border-gray-600 text-gray-400 hover:text-white"
+                    className="border-arcyn-matte-grey text-arcyn-subtext hover:text-arcyn-text"
                   >
                     <X className="w-4 h-4" />
                   </Button>
@@ -368,21 +368,21 @@ export function EnhancedChat() {
               value={newMessage}
               onChange={(e) => setNewMessage(e.target.value)}
               placeholder={`Message as ${profile?.username || 'User'}... (Try @A.E or /ae commands)`}
-              className="flex-1 bg-gray-800 border-gray-600 text-white placeholder:text-gray-400 focus:border-cyan-500"
+              className="flex-1 bg-arcyn-matte-grey border-arcyn-matte-grey text-arcyn-text placeholder:text-arcyn-subtext focus:border-arcyn-gold"
               disabled={!isConnected || isAEProcessing}
             />
             <Button
               type="submit"
               disabled={!newMessage.trim() || !isConnected || isAEProcessing}
-              className="bg-cyan-600 hover:bg-cyan-700 text-white"
+              className="bg-arcyn-gold hover:bg-arcyn-soft-gold text-arcyn-black"
             >
               Send
             </Button>
           </form>
 
           {/* A.E Commands Help */}
-          <div className="mt-2 text-xs text-gray-500">
-            <span className="font-medium text-cyan-400">A.E Commands:</span> @A.E [question] • /ae summarize • Upload files for analysis
+          <div className="mt-2 text-xs text-arcyn-subtext">
+            <span className="font-medium text-arcyn-gold">A.E Commands:</span> @A.E [question] • /ae summarize • Upload files for analysis
           </div>
         </div>
       )}

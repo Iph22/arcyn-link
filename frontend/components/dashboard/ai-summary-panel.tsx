@@ -123,25 +123,25 @@ export function AISummaryPanel({ threadId, onClose }: AISummaryPanelProps) {
       initial={{ x: 300, opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
       exit={{ x: 300, opacity: 0 }}
-      className="w-96 bg-gray-800 border-l border-gray-700 flex flex-col"
+      className="w-96 bg-arcyn-graphite border-l border-arcyn-matte-grey flex flex-col"
     >
       {/* Header */}
-      <div className="p-4 border-b border-gray-700">
+      <div className="p-4 border-b border-arcyn-matte-grey">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
-            <Brain className="w-5 h-5 text-violet-500" />
-            <h3 className="text-lg font-semibold text-white">AI Summary</h3>
+            <Brain className="w-5 h-5 text-arcyn-gold" />
+            <h3 className="text-lg font-semibold text-arcyn-text">AI Summary</h3>
           </div>
           <Button
             variant="ghost"
             size="sm"
             onClick={onClose}
-            className="text-gray-400 hover:text-white p-1"
+            className="text-arcyn-subtext hover:text-arcyn-text p-1"
           >
             <X className="w-4 h-4" />
           </Button>
         </div>
-        <p className="text-sm text-gray-400 mt-1">
+        <p className="text-sm text-arcyn-subtext mt-1">
           Claude-powered insights and key takeaways
         </p>
       </div>
@@ -175,16 +175,16 @@ export function AISummaryPanel({ threadId, onClose }: AISummaryPanelProps) {
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="bg-gradient-to-r from-violet-500/10 to-cyan-500/10 border border-violet-500/20 rounded-lg p-4"
+                className="bg-gradient-to-r from-arcyn-gold/10 to-arcyn-soft-gold/10 border border-arcyn-gold/20 rounded-lg p-4 shadow-gold-glow"
               >
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center space-x-2">
-                    <Sparkles className="w-4 h-4 text-violet-400" />
-                    <span className="text-sm font-medium text-violet-400">
+                    <Sparkles className="w-4 h-4 text-arcyn-gold" />
+                    <span className="text-sm font-medium text-arcyn-gold">
                       Latest Summary
                     </span>
                   </div>
-                  <div className="flex items-center space-x-1 text-xs text-gray-400">
+                  <div className="flex items-center space-x-1 text-xs text-arcyn-subtext">
                     <Clock className="w-3 h-3" />
                     {formatTime(latestSummary.summary.createdAt)}
                   </div>
@@ -192,13 +192,13 @@ export function AISummaryPanel({ threadId, onClose }: AISummaryPanelProps) {
                 
                 <div className="prose prose-sm prose-invert max-w-none">
                   <div 
-                    className="text-gray-300 text-sm leading-relaxed whitespace-pre-wrap"
+                    className="text-arcyn-text text-sm leading-relaxed whitespace-pre-wrap"
                     dangerouslySetInnerHTML={{ 
                       __html: latestSummary.summary.content
-                        .replace(/\*\*(.*?)\*\*/g, '<strong class="text-white">$1</strong>')
+                        .replace(/\*\*(.*?)\*\*/g, '<strong class="text-arcyn-gold">$1</strong>')
                         .replace(/\*(.*?)\*/g, '<em>$1</em>')
-                        .replace(/^## (.*$)/gm, '<h3 class="text-white font-semibold mt-4 mb-2">$1</h3>')
-                        .replace(/^# (.*$)/gm, '<h2 class="text-white font-bold text-lg mt-4 mb-2">$1</h2>')
+                        .replace(/^## (.*$)/gm, '<h3 class="text-arcyn-gold font-semibold mt-4 mb-2">$1</h3>')
+                        .replace(/^# (.*$)/gm, '<h2 class="text-arcyn-gold font-bold text-lg mt-4 mb-2">$1</h2>')
                         .replace(/^- (.*$)/gm, '<li class="ml-4">$1</li>')
                     }}
                   />
@@ -209,7 +209,7 @@ export function AISummaryPanel({ threadId, onClose }: AISummaryPanelProps) {
             {/* Previous Summaries */}
             {summariesData?.summaries && summariesData.summaries.length > 1 && (
               <div>
-                <h4 className="text-sm font-medium text-gray-400 mb-3 flex items-center">
+                <h4 className="text-sm font-medium text-arcyn-subtext mb-3 flex items-center">
                   <RefreshCw className="w-4 h-4 mr-1" />
                   Previous Summaries
                 </h4>
@@ -219,23 +219,23 @@ export function AISummaryPanel({ threadId, onClose }: AISummaryPanelProps) {
                       key={summary.id}
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
-                      className="bg-gray-700/50 border border-gray-600 rounded-lg p-3"
+                      className="bg-arcyn-matte-grey/50 border border-arcyn-matte-grey rounded-lg p-3"
                     >
                       <div className="flex items-center justify-between mb-2">
-                        <span className="text-xs font-medium text-gray-400">
+                        <span className="text-xs font-medium text-arcyn-subtext">
                           Summary
                         </span>
-                        <div className="flex items-center space-x-1 text-xs text-gray-500">
+                        <div className="flex items-center space-x-1 text-xs text-arcyn-subtext">
                           <Clock className="w-3 h-3" />
                           {formatTime(summary.createdAt)}
                         </div>
                       </div>
                       
                       <div 
-                        className="text-gray-300 text-xs leading-relaxed whitespace-pre-wrap line-clamp-4"
+                        className="text-arcyn-text text-xs leading-relaxed whitespace-pre-wrap line-clamp-4"
                         dangerouslySetInnerHTML={{ 
                           __html: summary.content
-                            .replace(/\*\*(.*?)\*\*/g, '<strong class="text-white">$1</strong>')
+                            .replace(/\*\*(.*?)\*\*/g, '<strong class="text-arcyn-gold">$1</strong>')
                             .replace(/\*(.*?)\*/g, '<em>$1</em>')
                         }}
                       />
@@ -248,11 +248,11 @@ export function AISummaryPanel({ threadId, onClose }: AISummaryPanelProps) {
             {/* Empty State */}
             {!latestSummary?.summary && !isGenerating && !generateSummaryMutation.isPending && (
               <div className="text-center py-8">
-                <Brain className="w-12 h-12 text-gray-600 mx-auto mb-4" />
-                <h4 className="text-lg font-semibold text-gray-400 mb-2">
+                <Brain className="w-12 h-12 text-arcyn-subtext mx-auto mb-4" />
+                <h4 className="text-lg font-semibold text-arcyn-subtext mb-2">
                   No Summary Yet
                 </h4>
-                <p className="text-gray-500 text-sm mb-4">
+                <p className="text-arcyn-subtext text-sm mb-4">
                   Generate an AI summary to get key insights and takeaways from this thread.
                 </p>
               </div>
@@ -262,15 +262,15 @@ export function AISummaryPanel({ threadId, onClose }: AISummaryPanelProps) {
             {(isGenerating || generateSummaryMutation.isPending) && (
               <div className="text-center py-8">
                 <div className="relative">
-                  <Brain className="w-12 h-12 text-violet-500 mx-auto mb-4 animate-pulse" />
+                  <Brain className="w-12 h-12 text-arcyn-gold mx-auto mb-4 animate-pulse" />
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <Loader2 className="w-6 h-6 text-violet-400 animate-spin" />
+                    <Loader2 className="w-6 h-6 text-arcyn-gold animate-spin" />
                   </div>
                 </div>
-                <h4 className="text-lg font-semibold text-violet-400 mb-2">
+                <h4 className="text-lg font-semibold text-arcyn-gold mb-2">
                   Analyzing Thread
                 </h4>
-                <p className="text-gray-400 text-sm">
+                <p className="text-arcyn-subtext text-sm">
                   Claude is reading through the messages and generating insights...
                 </p>
               </div>

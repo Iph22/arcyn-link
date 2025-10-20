@@ -43,12 +43,12 @@ export function Sidebar({
   const teamName = getTeamName(user.team)
 
   return (
-    <div className="w-80 bg-gray-800 border-r border-gray-700 flex flex-col">
+    <div className="w-80 bg-arcyn-graphite border-r border-arcyn-matte-grey flex flex-col">
       {/* Header */}
-      <div className="p-4 border-b border-gray-700">
+      <div className="p-4 border-b border-arcyn-matte-grey">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-gradient-to-r from-cyan-500 to-violet-500 rounded-lg"></div>
+            <div className="w-8 h-8 bg-gradient-to-r from-arcyn-gold to-arcyn-soft-gold rounded-lg"></div>
             <span className="text-lg font-display font-bold gradient-text">
               Arcyn Link
             </span>
@@ -63,11 +63,11 @@ export function Sidebar({
         </div>
 
         {/* Team Info */}
-        <div className="flex items-center space-x-3 p-3 bg-gray-700/50 rounded-lg">
+        <div className="flex items-center space-x-3 p-3 bg-arcyn-matte-grey/50 rounded-lg">
           <div className={`w-3 h-3 rounded-full ${teamColor.replace('text-', 'bg-')}`}></div>
           <div className="flex-1">
-            <h3 className="text-white font-semibold">{teamName}</h3>
-            <p className="text-gray-400 text-sm">{user.username}</p>
+            <h3 className="text-arcyn-text font-semibold">{teamName}</h3>
+            <p className="text-arcyn-subtext text-sm">{user.username}</p>
           </div>
         </div>
       </div>
@@ -76,7 +76,7 @@ export function Sidebar({
       <div className="flex-1 overflow-hidden">
         <div className="p-4">
           <div className="flex items-center justify-between mb-3">
-            <h4 className="text-gray-300 font-medium flex items-center">
+            <h4 className="text-arcyn-text font-medium flex items-center">
               <Hash className="w-4 h-4 mr-1" />
               Channels
             </h4>
@@ -84,7 +84,7 @@ export function Sidebar({
               size="sm"
               variant="ghost"
               onClick={() => setShowCreateChannel(true)}
-              className="text-gray-400 hover:text-white p-1"
+              className="text-arcyn-subtext hover:text-arcyn-text p-1"
             >
               <Plus className="w-4 h-4" />
             </Button>
@@ -99,8 +99,8 @@ export function Sidebar({
                   onClick={() => onChannelSelect(channel.id)}
                   className={`w-full text-left p-2 rounded-lg transition-colors ${
                     selectedChannelId === channel.id
-                      ? 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/30'
-                      : 'text-gray-300 hover:bg-gray-700/50 hover:text-white'
+                      ? 'bg-arcyn-gold/20 text-arcyn-gold border border-arcyn-gold/30 shadow-soft-gold-glow'
+                      : 'text-arcyn-text hover:bg-arcyn-matte-grey/50 hover:text-arcyn-gold'
                   }`}
                 >
                   <div className="flex items-center space-x-2">
@@ -109,13 +109,13 @@ export function Sidebar({
                       <div className="flex items-center justify-between">
                         <span className="font-medium truncate">{channel.name}</span>
                         {channel._count.messages > 0 && (
-                          <span className="text-xs bg-gray-600 px-1.5 py-0.5 rounded-full">
+                          <span className="text-xs bg-arcyn-matte-grey px-1.5 py-0.5 rounded-full text-arcyn-text">
                             {channel._count.messages}
                           </span>
                         )}
                       </div>
                       {channel.description && (
-                        <p className="text-xs text-gray-400 truncate mt-0.5">
+                        <p className="text-xs text-arcyn-subtext truncate mt-0.5">
                           {channel.description}
                         </p>
                       )}
@@ -129,16 +129,16 @@ export function Sidebar({
       </div>
 
       {/* User Profile */}
-      <div className="p-4 border-t border-gray-700">
+      <div className="p-4 border-t border-arcyn-matte-grey">
         <div className="flex items-center space-x-3 mb-3">
           <Avatar className="w-10 h-10">
-            <AvatarFallback className={`${generateAvatar(user.username)} text-white font-semibold`}>
+            <AvatarFallback className={`${generateAvatar(user.username)} text-arcyn-black font-semibold`}>
               {user.username.charAt(0).toUpperCase()}
             </AvatarFallback>
           </Avatar>
           <div className="flex-1 min-w-0">
-            <p className="text-white font-medium truncate">{user.username}</p>
-            <p className="text-gray-400 text-sm truncate">{user.email}</p>
+            <p className="text-arcyn-text font-medium truncate">{user.username}</p>
+            <p className="text-arcyn-subtext text-sm truncate">{user.email}</p>
           </div>
         </div>
 
@@ -146,7 +146,7 @@ export function Sidebar({
           <Button
             size="sm"
             variant="ghost"
-            className="flex-1 text-gray-400 hover:text-white"
+            className="flex-1 text-arcyn-subtext hover:text-arcyn-text"
           >
             <Settings className="w-4 h-4 mr-2" />
             Settings
@@ -155,7 +155,7 @@ export function Sidebar({
             size="sm"
             variant="ghost"
             onClick={logout}
-            className="text-gray-400 hover:text-red-400"
+            className="text-arcyn-subtext hover:text-red-400"
           >
             <LogOut className="w-4 h-4" />
           </Button>

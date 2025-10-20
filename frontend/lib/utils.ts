@@ -40,13 +40,13 @@ export function formatTime(date: string | Date) {
 export function getTeamColor(team: string) {
   switch (team) {
     case 'ARCYN_X':
-      return 'text-cyan-500'
+      return 'text-arcyn-gold'
     case 'MODULEX':
-      return 'text-violet-500'
+      return 'text-arcyn-soft-gold'
     case 'NEXALAB':
-      return 'text-emerald-500'
+      return 'text-arcyn-gold'
     default:
-      return 'text-gray-500'
+      return 'text-arcyn-subtext'
   }
 }
 
@@ -65,14 +65,14 @@ export function getTeamName(team: string) {
 
 export function generateAvatar(username: string) {
   const colors = [
-    'bg-red-500',
-    'bg-blue-500',
-    'bg-green-500',
-    'bg-yellow-500',
-    'bg-purple-500',
-    'bg-pink-500',
-    'bg-indigo-500',
-    'bg-cyan-500'
+    'bg-arcyn-gold',
+    'bg-arcyn-soft-gold',
+    'bg-gradient-to-r from-arcyn-gold to-arcyn-soft-gold',
+    'bg-gradient-to-r from-arcyn-soft-gold to-arcyn-gold',
+    'bg-arcyn-gold',
+    'bg-arcyn-soft-gold',
+    'bg-gradient-to-br from-arcyn-gold to-arcyn-soft-gold',
+    'bg-gradient-to-tl from-arcyn-gold to-arcyn-soft-gold'
   ]
   
   const index = username.charCodeAt(0) % colors.length

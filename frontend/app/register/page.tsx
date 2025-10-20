@@ -103,18 +103,18 @@ export default function RegisterPage() {
             Check Your Email
           </h1>
           
-          <p className="text-gray-400 mb-8">
-            We've sent a confirmation link to <span className="text-white font-semibold">{email}</span>. 
+          <p className="text-arcyn-subtext mb-8">
+            We've sent a confirmation link to <span className="text-arcyn-text font-semibold">{email}</span>. 
             Please check your inbox and click the link to verify your account.
           </p>
 
           <div className="space-y-4">
-            <p className="text-sm text-gray-500">
+            <p className="text-sm text-arcyn-subtext">
               Didn't receive the email? Check your spam folder.
             </p>
             
             <Link href="/login">
-              <Button variant="ghost" className="text-cyan-400 hover:text-cyan-300">
+              <Button variant="ghost" className="text-arcyn-gold hover:text-arcyn-soft-gold">
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Back to login
               </Button>
@@ -127,13 +127,13 @@ export default function RegisterPage() {
 
   // Registration form
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-arcyn-black via-arcyn-graphite to-arcyn-black flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         {/* Back button */}
         <Button
           variant="ghost"
           onClick={() => router.push('/')}
-          className="mb-8 text-gray-400 hover:text-white"
+          className="mb-8 text-arcyn-subtext hover:text-arcyn-text"
         >
           <ArrowLeft className="w-4 h-4 mr-2" />
           Back to home
@@ -147,11 +147,11 @@ export default function RegisterPage() {
         >
           {/* Logo */}
           <div className="text-center mb-8">
-            <div className="w-12 h-12 bg-gradient-to-r from-cyan-500 to-violet-500 rounded-xl mx-auto mb-4"></div>
+            <div className="w-12 h-12 bg-gradient-to-r from-arcyn-gold to-arcyn-soft-gold rounded-xl mx-auto mb-4"></div>
             <h1 className="text-2xl font-display font-bold gradient-text mb-2">
               Join Arcyn Link
             </h1>
-            <p className="text-gray-400">
+            <p className="text-arcyn-subtext">
               Create your account and start collaborating
             </p>
           </div>
@@ -159,7 +159,7 @@ export default function RegisterPage() {
           {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-2">
-              <Label htmlFor="email" className="text-white">
+              <Label htmlFor="email" className="text-arcyn-text">
                 Email
               </Label>
               <Input
@@ -169,12 +169,12 @@ export default function RegisterPage() {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter your email"
                 required
-                className="bg-gray-800/50 border-gray-600 text-white placeholder:text-gray-400 focus:border-cyan-500"
+                className="bg-arcyn-matte-grey/50 border-arcyn-matte-grey text-arcyn-text placeholder:text-arcyn-subtext focus:border-arcyn-gold"
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="username" className="text-white">
+              <Label htmlFor="username" className="text-arcyn-text">
                 Username
               </Label>
               <Input
@@ -186,12 +186,12 @@ export default function RegisterPage() {
                 required
                 minLength={3}
                 maxLength={20}
-                className="bg-gray-800/50 border-gray-600 text-white placeholder:text-gray-400 focus:border-cyan-500"
+                className="bg-arcyn-matte-grey/50 border-arcyn-matte-grey text-arcyn-text placeholder:text-arcyn-subtext focus:border-arcyn-gold"
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="password" className="text-white">
+              <Label htmlFor="password" className="text-arcyn-text">
                 Password
               </Label>
               <div className="relative">
@@ -203,12 +203,12 @@ export default function RegisterPage() {
                   placeholder="Create a password"
                   required
                   minLength={6}
-                  className="bg-gray-800/50 border-gray-600 text-white placeholder:text-gray-400 focus:border-cyan-500 pr-10"
+                  className="bg-arcyn-matte-grey/50 border-arcyn-matte-grey text-arcyn-text placeholder:text-arcyn-subtext focus:border-arcyn-gold pr-10"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-arcyn-subtext hover:text-arcyn-text"
                 >
                   {showPassword ? (
                     <EyeOff className="w-4 h-4" />
@@ -220,7 +220,7 @@ export default function RegisterPage() {
             </div>
 
             <div className="space-y-3">
-              <Label className="text-white">
+              <Label className="text-arcyn-text">
                 Select your team
               </Label>
               <div className="space-y-3">
@@ -231,16 +231,16 @@ export default function RegisterPage() {
                     whileTap={{ scale: 0.98 }}
                     className={`relative cursor-pointer rounded-lg border-2 p-4 transition-colors ${
                       selectedTeam === team.id
-                        ? `${team.borderColor} bg-gray-800/50`
-                        : 'border-gray-600 bg-gray-800/30 hover:border-gray-500'
+                        ? `${team.borderColor} bg-arcyn-matte-grey/50`
+                        : 'border-arcyn-matte-grey bg-arcyn-matte-grey/30 hover:border-arcyn-soft-gold'
                     }`}
                     onClick={() => setSelectedTeam(team.id)}
                   >
                     <div className="flex items-center space-x-3">
                       <div className={`w-10 h-10 bg-gradient-to-r ${team.color} rounded-lg flex-shrink-0`}></div>
                       <div className="flex-1">
-                        <h3 className="text-white font-semibold">{team.name}</h3>
-                        <p className="text-gray-400 text-sm">{team.description}</p>
+                        <h3 className="text-arcyn-text font-semibold">{team.name}</h3>
+                        <p className="text-arcyn-subtext text-sm">{team.description}</p>
                       </div>
                       {selectedTeam === team.id && (
                         <Check className="w-5 h-5 text-green-500" />
@@ -274,7 +274,7 @@ export default function RegisterPage() {
               Already have an account?{' '}
               <Link
                 href="/login"
-                className="text-cyan-400 hover:text-cyan-300 font-medium"
+                className="text-arcyn-gold hover:text-arcyn-soft-gold font-medium"
               >
                 Sign in
               </Link>
