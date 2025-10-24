@@ -18,6 +18,7 @@ import {
   MessageSquare
 } from 'lucide-react'
 import { motion } from 'framer-motion'
+import { ArcynEyeTrigger } from '@/components/arcyn-eye'
 
 interface SidebarProps {
   channels: Channel[]
@@ -143,6 +144,9 @@ export function Sidebar({
         </div>
 
         <div className="flex space-x-2">
+          {/* Arcyn Eye Trigger Button */}
+          <ArcynEyeTrigger variant="button" showLabel={false} />
+          
           <Button
             size="sm"
             variant="ghost"

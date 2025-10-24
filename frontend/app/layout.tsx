@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import { Providers } from './providers'
 import { Toaster } from '@/components/ui/toaster'
+import { ArcynEyeProvider } from '@/components/arcyn-eye'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -24,8 +25,11 @@ export default function RootLayout({
     <html lang="en" className="dark">
       <body className={inter.className}>
         <Providers>
-          {children}
-          <Toaster />
+          {/* Wrap children with ArcynEyeProvider */}
+          <ArcynEyeProvider defaultVisible={false} defaultFloating={true}>
+            {children}
+            <Toaster />
+          </ArcynEyeProvider>
         </Providers>
       </body>
     </html>
